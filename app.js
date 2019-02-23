@@ -65,7 +65,7 @@ app.get(/geocode/, (req, res) => {
   });
 });
 
-geocoder.init({}, () => {
+geocoder.init({load:{admin1: true, admin2: false, admin3And4: false, alternateNames: false}}, () => {
   var port = Number(process.env.PORT || 3000);
   app.listen(port, function() {
     console.log('Local reverse geocoder listening on port ' + port);
