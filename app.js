@@ -30,9 +30,9 @@ function getParams (req, res) {
  * @param addresses
  */
 function getShortname (addresses) {
-  const { asciiName, countryCode, admin1Code } = addresses.flat()[0];
+  const { asciiName, countryCode, admin1Code } = addresses[0][0];
   const shortname = `${asciiName}, ${admin1Code.asciiName}, ${countryCode}`;
-  return shortname;
+  return { shortname };
 }
 
 app.get(/shortname/, (req, res) => {
@@ -43,6 +43,9 @@ app.get(/shortname/, (req, res) => {
     if (err) {
       return res.status(400).send(err);
     }
+
+    console.log(addresses);
+
     let locationName = {};
     try {
       locationName = getShortname(addresses);
@@ -50,7 +53,7 @@ app.get(/shortname/, (req, res) => {
       console.log(err);
     }
 
-    return res.send(locationName);
+    return res.json(locationName);
   });
 });
 
